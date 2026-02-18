@@ -1,7 +1,26 @@
-import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const bannerData = [
+  {
+    id: "1",
+    image: "https://m.media-amazon.com/images/S/pv-target-images/ae3ce4e04beae38473fa51fd111a778760943d48032d72587e3477c29442bb01._SX1080_FMpng_.png",
+    title: "Coraline"
+  },
+  {
+    id: "2",
+    image: "https://ogimg.infoglobo.com.br/in/24076153-754-a08/FT1086A/sonic-nova-aparencia.png",
+    title: "Sonic: O Filme"
+  },
+  {
+    id: "3",
+    image: "https://images-3.rakuten.tv/storage/snapshot/shot/258c02ba-034d-413e-8ddd-ae7a49524925-snapshot-1590665238-width936-quality90.jpeg",
+    title: "Harry Potter e as Relíquias da Morte: Parte 1"
+  }
+]
+
 const filmesEmAlta = [
+
   {
     id: 1,
     title: "Interstellar",
@@ -46,7 +65,7 @@ const series = [
     image: "https://images.justwatch.com/poster/330517928/s718/olympo.jpg"
   }
 ]
- 
+
 const filmes = [
   {
     id: 1,
@@ -70,11 +89,14 @@ const filmes = [
   }
 ]
 
+const {width} = Dimensions.get("window")
+
 export default function Index() {
   return (
 
+    
     <SafeAreaView style={style.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
 
         <View>
           <View style={style.senaiFlix}>
@@ -83,6 +105,28 @@ export default function Index() {
           </View>
           <Text style={style.welcomeText}>Bem vindo ao seu catálogo de filmes e séries.</Text>
         </View>
+
+        <View style={style.section}>
+          <FlatList 
+            data={bannerData}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={(({item}) =>(
+              <View style={style.bannerContainer}>
+                <View style={style.bannerItem}>
+                  <Image style={style.bannerImage} source={{uri: item.image}}></Image>
+                  <Text style={style.bannerTitle}>{item.title}</Text>
+
+              <TouchableOpacity style={style.bannerButtom}>
+                <Text style={style.bannerButtonText}>Assitir</Text>
+              </TouchableOpacity>
+
+                </View>
+              </View>
+            ))}
+          />
+        </View>
+
 
         <View style={style.section}>
           <Text style={style.sectionTitle}>Em Alta</Text>
@@ -97,8 +141,10 @@ export default function Index() {
               <View style={style.movieItem}>
                 <Image style={style.movieImage} source={{ uri: item.image }} />
                 <Text style={style.movieTitle}>{item.title}</Text>
-              </View>
 
+
+
+              </View>
             ))}>
 
           </FlatList>
@@ -202,5 +248,43 @@ const style = StyleSheet.create({
   },
   section: {
     marginBottom: 30
+  },
+  bannerImage:{
+    width:"100%",
+    height:200,
+    resizeMode:"cover",
+    borderRadius:8
+  },
+  bannerTitle:{
+    color:"#fff",
+    fontSize: 20,
+    fontWeight: "bold",
+    position:"absolute",
+    bottom: 40,
+    left: 15
+
+  },
+  bannerItem:{
+    flex:1,
+    height: 200,
+    paddingHorizontal: 5,
+    position: "relative"
+  },
+  bannerContainer:{
+    width: width - 30
+
+  },
+  bannerButtom:{
+    backgroundColor:"#e50914",
+    borderRadius: 5,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    bottom: 10,
+    left:15
+  },
+  bannerButtonText:{
+    color:"#fff",
+    fontSize: 13,
+    fontWeight:"bold"
   }
 })
